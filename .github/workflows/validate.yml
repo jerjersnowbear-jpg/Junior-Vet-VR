@@ -1,0 +1,29 @@
+name: Validate Junior Vet VR
+on: [push, pull_request]
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess,json
+          for n in ['index.html','academy.html','atlas.html','device.html']:
+              t=Path(n).read_text().split('<script>')[-1].split('</script>')[0]
+              Path('/tmp/jvet-check.js').write_text(t)
+              subprocess.run(['node','--check','/tmp/jvet-check.js'],check=True)
+          for n in ['curriculum.js','sw.js']:
+              subprocess.run(['node','--check',n],check=True)
+          m=json.loads(Path('manifest.webmanifest').read_text())
+          for i in m['icons']: assert Path(i['src']).is_file()
+          PY
+      - run: pip install playwright
+      - run: python -m playwright install --with-deps chromium
+      - run: python tests/smoke.py

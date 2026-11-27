@@ -1,0 +1,10 @@
+PASS: 8 immersive anatomy exhibits, 8 challenge flows, persistence on room reentry, dynamic patient geometry, 13 visited rooms (mock GL)
+PASS: all 13 reception destinations, four skills scenarios, 12 ordered decisions, wrong answers, saved skill records, 14 rooms (mock GL)
+PASS: 44 VR cases, ordered clues, wrong answers, mid-case restore, 12 visited rooms, preflight and break UI (mock GL)
+PASS: specialty filter, patient search, skills backup sanitation
+PASS: 44 academy cases, incorrect answer feedback, 16 lessons, parent dashboard
+PASS: all 8 anatomy systems, organ selection, wrong answers and completion
+PASS: device readiness interface, stereo pattern, exit and manual checklist
+
+PASS: actual GLSL shaders compiled and linked under Mesa GLES2; four independent scene renders completed.
+Physical phone, live browser WebGL, optical calibration and veterinary review remain unverified.
