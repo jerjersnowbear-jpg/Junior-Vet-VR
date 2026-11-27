@@ -1,5 +1,5 @@
 'use strict';
-const CACHE='junior-vet-v6.0.1',FILES=['./index.html','./academy.html','./atlas.html','./device.html','./curriculum.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
+const CACHE='junior-vet-v6.0.2',FILES=['./index.html','./academy.html','./atlas.html','./device.html','./curriculum.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES).then(()=>self.skipWaiting()))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('junior-vet-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;if(e.request.mode==='navigate'){e.respondWith(fetch(e.request,{cache:'no-store'}).catch(async()=>{const c=await caches.open(CACHE);let u=new URL(e.request.url);return await c.match(u.pathname.endsWith('academy.html')?'./academy.html':u.pathname.endsWith('atlas.html')?'./atlas.html':u.pathname.endsWith('device.html')?'./device.html':'./index.html')}));return}e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))});
